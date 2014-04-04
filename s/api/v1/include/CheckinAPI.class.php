@@ -1,5 +1,5 @@
 <?php
-
+require_once 'HT.php';
 require_once 'API.class.php';
 require_once 'PEAR.php';
 class CheckinAPI extends API
