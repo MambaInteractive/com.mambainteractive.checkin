@@ -1,0 +1,252 @@
+html {
+    height:100%;
+}
+body {
+    height:100%;
+    text-align:center;
+}
+#wrap {
+    min-width:600px;
+    height:100%;
+    position:relative;
+    background:-webkit-radial-gradient(#eee, #999);
+    background:radial-gradient(#eee, #999);
+    overflow:hidden;
+}
+.adminWrap {
+    background:-webkit-radial-gradient(#eee, #C67171) !important;
+    background:radial-gradient(#eee, #C67171) !important;
+}
+@font-face {
+    font-family:'Fjalla One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fjalla One'), local('FjallaOne-Regular'), url(http://themes.googleusercontent.com/static/fonts/fjallaone/v1/rxxXUYj4oZ6Q5oDJFtEd6hsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}
+* {
+    margin:0;
+    padding:0;
+}
+/* body::before{ content:''; display:inline-block; height:100%; vertical-align:middle; } */
+ header {
+    position:absolute;
+    z-index:999;
+    top:25px;
+    left:50%;
+    width:960px;
+    margin-left: -480px;
+    padding: 0;
+    text-align:center;
+    background: url(../img/invigorate.png);
+    height: 135px;
+}
+section.grade {
+    margin-top: 15px;
+}
+section.buttons {
+    margin-top: 60px;
+}
+#content menu.radio {
+    display:inline-block;
+    vertical-align:top;
+    overflow:hidden;
+    margin:0 12px;
+    border-radius:6px;
+    box-shadow:0 0 0 4px rgba(0, 0, 0, 0.2);
+}
+#content menu button {
+    font-family:'Fjalla One', sans-serif;
+    margin: 0;
+    cursor: pointer;
+    color: #333;
+    padding: 6px 12px;
+    text-shadow: 0 1px #FFF;
+    font-size: 3em;
+    border: 0;
+    border-radius: 5px;
+    max-width: 94%;
+    min-width: 94%;
+    height: 73px;
+    box-shadow: 0 -20px 20px -20px #aaa inset, 0 0 0 4px rgba(0, 0, 0, .2);
+    -webkit-transition: .1s;
+    transition: .1s;
+    background: #ddd;
+}
+#content menu button#saveOnly{
+	height: 28px;
+	font-size: 1em;
+	min-width: 200px;
+	max-width: 200px;
+	box-shadow: none;
+	margin-top: 24px;
+}
+#content menu button:hover {
+    background-color:#CCC;
+}
+#content menu button:first-child {
+    border:0;
+}
+#content menu button.active {
+    background-color:#BBB;
+    color:#000;
+    box-shadow:0 1px 3px #111 inset;
+    padding:7px 12px 6px;
+}
+#content menu.radio {
+    background:#EEE;
+    box-shadow:0 -20px 20px -20px #aaa inset, 0 0 0 4px rgba(0, 0, 0, .2);
+    position:relative;
+    max-width:94%;
+    min-width:94%;
+}
+#_DymoLabelFrameworkJslPlugin{
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+#content menu.radio > div {
+    position:absolute;
+    top:2px;
+    bottom:2px;
+    border-radius:5px;
+    left:0;
+    z-index:1;
+    background:#103555;
+    box-shadow:0 16px 0 0 rgba(255, 255, 255, 0.1) inset;
+    -webkit-transition:0.2s ease-out;
+    transition:0.2s ease-out;
+}
+.adminWrap #content menu.radio > div {
+    background: #CD2626 !important;
+}
+#content menu.radio label {
+    display:inline-block;
+    position:relative;
+    z-index:2;
+    margin:0 2px;
+    width: 32%;
+}
+#content menu.radio span {
+    opacity:.5;
+    color:#222;
+    font-family:'Fjalla One', sans-serif;
+    letter-spacing: 2px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    cursor:pointer;
+    padding:6px 12px;
+    display:inline-block;
+    -webkit-transition:0.2s ease-out;
+    transition:0.2s ease-out;
+    width: 100%;
+}
+#content menu.radio :checked ~ span {
+    opacity:1;
+    color:#FFF;
+}
+#content menu.radio label:hover span {
+    opacity:1;
+}
+#content menu.radio input {
+    display:none;
+}
+a.git, a.by {
+    position:absolute;
+    bottom:2px;
+    right:5px;
+    -webkit-transform:scale(0.8);
+    -webkit-transform-origin:100% 100%;
+    transform:scale(0.8);
+    transform-origin:100% 100%;
+    opacity:0.3;
+    -webkit-transition:0.3s cubic-bezier(0.055, 0.6, 0.2, 1);
+    transition:0.3s cubic-bezier(0.055, 0.6, 0.2, 1);
+}
+a.git:hover, a.by:hover {
+    -webkit-transform:scale(1);
+    transform:scale(1);
+    opacity:1;
+}
+a.git img {
+}
+a.by {
+    text-transform:capitalize;
+    right:auto;
+    left:5px;
+    font-size:20px;
+    color:#FFF;
+    text-decoration:none;
+    font-family:'Fjalla One', sans-serif;
+    -webkit-transform-origin:0% 100%;
+    transform-origin:0% 100%;
+}
+.social {
+    position:absolute;
+    top:-15px;
+    left:5px;
+    -webkit-filter:blur(20px);
+    opacity:0;
+    -webkit-transition:1s ease-out;
+    transition:.6s ease-out;
+}
+.social.show {
+    top:5px;
+    opacity:1;
+    -webkit-filter:none;
+}
+.fbLike {
+    height:21px;
+    width:100px;
+    border:none;
+}
+.twitter-share-button {
+}
+.social > * {
+    opacity:.5;
+    -webkit-transition:.2s ease-out;
+    transition:.2s ease-out;
+}
+.social > *:hover {
+    opacity:1;
+}
+#content {
+    position:absolute;
+    width:960px;
+    left: 50%;
+    margin-left: -480px;
+    height:100%;
+    -webkit-transition:.6s cubic-bezier(0.02, 0.6, 0.2, 1);
+    transition:.6s cubic-bezier(0.02, 0.6, 0.2, 1);
+}
+#content section.input {
+    height:150px;
+    margin-top: 300px;
+}
+#content section::before {
+    content:'';
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+.fancyInput {
+    max-width:90%;
+    min-width:90%;
+    font-size:60px;
+    color:#FFF;
+    vertical-align:middle;
+    line-height:1.3;
+    overflow:hidden;
+    text-align:left;
+    box-shadow:0 1px 0 rgba(255, 255, 255, .15), 0 2px 4px rgba(0, 0, 0, .2) inset, 0 0 12px rgba(255, 255, 255, .1);
+    padding:8px 20px;
+    background:rgba(0, 0, 0, .1);
+    border-radius:10px;
+}
+.fancyInput.textarea {
+    line-height:normal;
+    font-size:40px;
+    max-width:50%;
+    min-height:160px;
+    max-height:40%;
+}

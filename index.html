@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+    <head>
+        <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+        <meta charset="utf-8">
+        <title>Invigorate Checkin</title>
+
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/fancyInput.css">
+        <script type="text/javascript" src="js/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="js/dymo.js">
+        </script>
+    </head>
+
+    <body>
+        <div id='wrap'>
+            <header>
+            </header>
+
+            <div id='content' class="effect2">
+                <section class='input'>
+                    <div>
+                        <input autocomplete="off" id="name" type='text' placeholder='Type Your Name...'>
+                    </div>
+                </section>
+                <section class="grade">
+                    <menu class='radio'>
+                        <label>
+                            <input type='radio' value='Junior High' name='type' />
+                            <span>Junior High</span>
+                        </label>
+                        <label>
+                            <input type='radio' value='Senior High' name='type' />
+                            <span>Senior High</span>
+                        </label>
+                        <label>
+                            <input type='radio' value='Adult Staff' name='type' />
+                            <span>Adult Staff</span>
+                        </label>
+                        <div></div>
+                    </menu>
+                </section>
+                <div id="preview" style="width: 102mm; height: 59mm; margin:auto; margin-top: 30px"></div>
+
+                <section class="buttons">
+                    <menu>
+                        <button id="saveAndPrint">Sign In & Print Nametag</button>
+                        <button id="saveOnly">Sign In Only</button>
+                    </menu>
+                </section>
+            </div>
+
+        </div>
+        <script src='js/fancyInput.js'></script>
+        <script>
+        // Capture TAB to switch between the Demo page views (input/textarea)
+        var last, fanIn, t = null,
+            j, printer, inter,was = "", labelLink = "http://localhost/checkin/labels/Invigorate.label";
+        $(function() {
+
+            last = {};
+            fanIn = $('section.input :input').val('').fancyInput();
+            fanIn[0].focus();
+            printer = $(dymo.label.framework.getPrinters()).filter(function() {
+                console.dir($(this));
+                return this.isConnected;
+            })[0];
+
+            $('#content menu.radio').on('change', 'input', changeForm).find('input:first').prop('checked', true).trigger('change');
+
+            $('#saveAndPrint').on('click', function() {
+                save(true);
+            });
+
+            inter = setInterval(function() {
+            	var $val = $('#name').val();
+                if ($val != was || $val != "") {
+                	console.log("Preview");
+                    try {
+                        LoadIt();
+                        PreviewIt();
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            }, 500);
+
+
+
+
+            $('#saveOnly').on('click', function() {
+                save(false);
+            });
+            $('body html').css('max-height', $(window).height() + 'px');
+        });
+
+        function validate(last) {
+            return last.Name != "";
+        }
+
+        function LoadIt() {
+            try {
+                last = {};
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                last.Name = $('#name').val();
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                last.Grade = $('.radio :input:checked').val();
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        function PreviewIt() {
+            t = dymo.label.framework.openLabelFile(labelLink);
+
+            t.setObjectText("Name", last.Name);
+            t.setObjectText("Level", last.Grade);
+            $('#preview')
+                .css('background', 'url(data:image/png;base64,' + t.render('<?xml version="1.0" encoding="utf-8"?><LabelRenderParams><PngUseDisplayResolution>False</PngUseDisplayResolution></LabelRenderParams>', printer.name) + ')')
+                .css('background-size', 'cover');
+        }
+
+        function save(printNameTag) {
+            LoadIt();
+            PreviewIt();
+            if (validate(last)) {
+                //send to service
+                var aj = $.ajax({
+                    url: "s/api/v1/checkin/" + last.Grade + "/" + last.Name,
+                    async: false
+                });
+                var success = aj.status == 200;
+                if (success && printNameTag) {
+                    print(last);
+                }
+            };
+            try {
+                $('#name').val('').trigger('change');
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                fancyInput.removeChars($('.fancyInput div'), [0]);
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                $('#name').focus();
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                $('#name').select();
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+
+        function print(last) {
+            if (printer && printer.name) {
+                try {
+                    t.print(printer.name);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+
+        function changeForm(e) {
+            // radio buttons stuff
+            var page = this.value,
+                highlight = $(e.delegateTarget).find('div'),
+                label = $(this.parentNode),
+                marginLeft = parseInt(label.css('margin-left'), 10),
+                xPos;
+
+            highlight.css({
+                'left': label.position().left + marginLeft,
+                'width': label.width()
+            });
+            switch (page) {
+                case "Senior High":
+                case "Junior High":
+                    labelLink = "http://localhost/checkin/labels/Invigorate.label";
+                    $('#wrap').removeClass('adminWrap');
+                    break;
+                case "Adult Staff":
+                    labelLink = "http://localhost/checkin/labels/Invigorate-STAFF.label"
+                    $('#wrap').addClass('adminWrap');
+                    break;
+                default:
+                    $('#wrap').removeClass('adminWrap');
+                    labelLink = "http://localhost/checkin/labels/Invigorate.label";
+                    break;
+            }
+            try {
+                LoadIt();
+                PreviewIt();
+            } catch (e) {
+                console.log(e);
+            }
+
+        }
+        </script>
+    </body>
+
+</html>

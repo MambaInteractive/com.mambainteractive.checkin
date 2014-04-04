@@ -1,0 +1,22 @@
+body, html {
+    padding: 0;
+    margin: 0;
+}
+.content {
+    width: 82mm;
+    height: 57mm;
+    line-height: 57mm;
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    position: absolute;
+    top: 12.6mm;
+    left: -22.6mm;
+}
+.content {
+    border: solid black 1px;
+}
